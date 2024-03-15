@@ -9,17 +9,11 @@ class RedisClient {
     });
   }
 
-  async isAlive() {
-    return new Promise((resolve) => {
-      this.client.ping((error, result) => {
-        if (error) {
-          console.error('Redis ping failed:', error);
-          resolve(false);
-        } else {
-          resolve(true);
-        }
-      });
-    });
+  isAlive() {
+    if (this.client.connected) {
+      return true;
+    }
+    return false;
   }
 
   async get(key) {
